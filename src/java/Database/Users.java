@@ -6,7 +6,6 @@
 package Database;
 
 import java.io.Serializable;
-import java.security.DigestException;
 import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -92,7 +91,7 @@ public class Users implements Serializable {
         MessageDigest md = MessageDigest.getInstance("SHA-256");
         md.update(passwordc.getBytes());
         byte byteData[] = md.digest();
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         for (int i = 0; i < byteData.length; i++) {
          sb.append(Integer.toString((byteData[i] & 0xff) + 0x100, 16).substring(1));
         }
@@ -107,7 +106,7 @@ public class Users implements Serializable {
         MessageDigest md = MessageDigest.getInstance("SHA-256");
         md.update(usernamec.getBytes());
         byte byteData[] = md.digest();
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         for (int i = 0; i < byteData.length; i++) {
          sb.append(Integer.toString((byteData[i] & 0xff) + 0x100, 16).substring(1));
         }
