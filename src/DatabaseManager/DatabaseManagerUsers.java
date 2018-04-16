@@ -6,6 +6,7 @@
 package DatabaseManager;
 
 import database.Users;
+import java.applet.Applet;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -22,13 +23,14 @@ import java.util.List;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JApplet;
 
 /**
  *
  * @author Dinaro Salvatore
  * @version 1.0
  */
-public class DatabaseManagerUsers {
+public class DatabaseManagerUsers extends JApplet{
     
     private static Connection connection;
 
@@ -115,7 +117,7 @@ public class DatabaseManagerUsers {
         }
     }
 
-    public int size() {
+    public int sizeU() {
         return users.size();
     }
 

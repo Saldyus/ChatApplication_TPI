@@ -23,7 +23,10 @@
                     <div class="left-chat">
                         <ul>
                             <%
-                                DatabaseManagerUser u = (DatabaseManagerUser) session.getAttribute("");
+                                DatabaseManagerUser u = (DatabaseManagerUser) session.getAttribute("user");
+                            %>
+                            <%
+                                u.getAllUser().get(0);
                             %>
                             <font color="white"><div id="user">User</div></font>
 
