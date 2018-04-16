@@ -30,7 +30,6 @@ public class Users implements Serializable{
      * 
      * @param Username The username of the person
      * @param Password_c The crypted password of the person
-     * @param username_c The crypted username of the person
      * @param nome_v The visualazed name of the person
      */
     public Users(String Username, String Password_c, String nome_v) {
@@ -73,7 +72,6 @@ public class Users implements Serializable{
     /**
      *
      * @param Password The Password that the person insered
-     * @throws java.security.NoSuchAlgorithmException
      */
     public void setPassword_c(String Password) throws NoSuchAlgorithmException {
         MessageDigest md = MessageDigest.getInstance("SHA-256");

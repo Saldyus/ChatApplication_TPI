@@ -38,6 +38,7 @@ public class Messaggi implements Serializable{
      * @param dest The recipient's username of the message
      * @param type_m The type of the message
      * @param text_m The text of the message
+     * @param data_m The date of the message
      */
     public Messaggi(int ID_M, String mitt, String dest, String type_m, String text_m, Date data_m){
         this.ID_M=ID_M;

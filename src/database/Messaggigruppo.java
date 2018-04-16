@@ -37,6 +37,7 @@ public class Messaggigruppo implements Serializable{
      * @param type_m The type of the message
      * @param text_m The text of the message
      * @param ID_G The Id of the group
+     * @param data_m The date of the message
      */
     public Messaggigruppo(int ID_M, String mitt, String type_m, String text_m, int ID_G, Date data_m){
         this.ID_M=ID_M;
