@@ -1,6 +1,0 @@
-<li>
-	<div class="rightside-left-chat">
-		<span><i class="fa fa-circle" aria-hidden="true"></i> nome ricevente <small>10:00 AM,Today</small> </span><br><br>
-			<p> text </p>
-	</div>
-</li>
