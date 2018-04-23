@@ -1,9 +1,9 @@
 <li>
-							<div class="chat-left-img">
-								<img src="image/businessman.png">
-							</div>
-							<div class="chat-left-detail">
-								<p>luis yankee</p>
-								<span><i class="fa fa-circle" aria-hidden="true"></i> online</span>
-							</div>
-						</li>
+	<div class="chat-left-img">
+		<img src="image/businessman.png">
+	</div>
+	<div class="chat-left-detail">
+		<p>luis yankee</p>
+		<span><i class="fa fa-circle" aria-hidden="true"></i> online</span>
+	</div>
+</li>
