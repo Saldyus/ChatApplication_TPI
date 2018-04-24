@@ -25,6 +25,8 @@ public class Users implements Serializable{
 
     @Size(max = 20)
     private String Nome_v;
+    
+    private String Url_img;
 
     /**
      * 
@@ -109,4 +111,21 @@ public class Users implements Serializable{
     public void setNome_v(String Nome_v) {
         this.Nome_v = Nome_v;
     }
+    
+    /**
+     * 
+     * @return the URL of the image
+     */
+    public String getUrlImg() {
+        return Url_img;
+    }
+    
+    /**
+     * 
+     * @param Url_img The URL of the image
+     */
+    public void setUrlImg(String Url_img) {
+        this.Url_img = Url_img;
+    }
+    
 }

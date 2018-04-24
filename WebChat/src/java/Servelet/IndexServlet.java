@@ -5,6 +5,8 @@
  */
 package Servelet;
 
+import database.Gruppo;
+import database.Partecipa;
 import database.Users;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -76,6 +78,24 @@ public class IndexServlet extends HttpServlet {
         return users;
 
     }
+    
+    private List<Partecipa> getPartecipa(){
+        List<Partecipa> partecipa = new ArrayList<>();
+        try {
+            Connection c = dataSource.getConnection();
+            Statement st = c.createStatement();
+            ResultSet rs = st.executeQuery("SELECT * FROM chat.Partecipa");
+            while(rs.next()){
+                String username = rs.getString("Username");
+                int ID_G = rs.getInt("ID_G");
+                Partecipa p = new Partecipa(username, ID_G);
+                partecipa.add(p);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(IndexServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return partecipa;
+    }
 
     /**
      * Handles the HTTP <code>POST</code> method.
@@ -102,6 +122,8 @@ public class IndexServlet extends HttpServlet {
                 String password = r.getString("Password_c");
                 if (username.equals(username_mitt) && password.equals(hashCode(password_l))) {
                     List<Users> users = getUsers(username_mitt);
+                    List<Partecipa> partecipa = getPartecipa();
+                    request.setAttribute("groups", partecipa);
                     request.setAttribute("users", users);
                     request.setAttribute("username_mitt", username_mitt);
                     request.getRequestDispatcher("index.jsp").forward(request, response);
