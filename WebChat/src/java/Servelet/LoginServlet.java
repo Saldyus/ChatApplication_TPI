@@ -46,7 +46,7 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.getRequestDispatcher("LogIn.jsp").forward(request, response);
+        request.getRequestDispatcher("login_prova.jsp").forward(request, response);
     }
 
     /**
@@ -82,7 +82,7 @@ public class LoginServlet extends HttpServlet {
             ps.setString(3, nome_v);
             ps.executeUpdate();
 
-            request.getRequestDispatcher("LogIn.jsp").forward(request, response);
+            request.getRequestDispatcher("login_prova.jsp").forward(request, response);
 
         } catch (SQLException ex) {
             Logger.getLogger(LoginServlet.class.getName()).log(Level.SEVERE, null, ex);

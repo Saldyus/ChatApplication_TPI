@@ -130,7 +130,7 @@ public class IndexServlet extends HttpServlet {
                 }
             }
 
-            request.getRequestDispatcher("LogIn.jsp").forward(request, response);
+            request.getRequestDispatcher("login_prova.jsp").forward(request, response);
 
         } catch (SQLException ex) {
             Logger.getLogger(LoginServlet.class.getName()).log(Level.SEVERE, null, ex);
