@@ -38,7 +38,7 @@ public class IndexServlet extends HttpServlet {
 
     @Resource(name = "java:app/jdbc/chatWebR")
     private DataSource dataSource;
-    
+
     private String username_mitt;
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -53,9 +53,10 @@ public class IndexServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        List<Users> users = getUsers("");
-        request.setAttribute("users", users);
-        request.getRequestDispatcher("index.jsp").forward(request, response);
+        
+        //List<Users> users = getUsers("");
+        //request.setAttribute("users", users);
+        //request.getRequestDispatcher("index.jsp").forward(request, response);
     }
 
     private List<Users> getUsers(String username_i) {
@@ -78,14 +79,14 @@ public class IndexServlet extends HttpServlet {
         return users;
 
     }
-    
-    private List<Partecipa> getPartecipa(){
+
+    private List<Partecipa> getPartecipa() {
         List<Partecipa> partecipa = new ArrayList<>();
         try {
             Connection c = dataSource.getConnection();
             Statement st = c.createStatement();
             ResultSet rs = st.executeQuery("SELECT * FROM chat.Partecipa");
-            while(rs.next()){
+            while (rs.next()) {
                 String username = rs.getString("Username");
                 int ID_G = rs.getInt("ID_G");
                 Partecipa p = new Partecipa(username, ID_G);
@@ -111,8 +112,9 @@ public class IndexServlet extends HttpServlet {
 
         String username_l = request.getParameter("username");
         String password_l = request.getParameter("password");
-        username_mitt=username_l;
-        
+        username_mitt = username_l;
+        int index = 0;
+
         try {
             Connection c = dataSource.getConnection();
             Statement s = c.createStatement();
@@ -127,10 +129,12 @@ public class IndexServlet extends HttpServlet {
                     request.setAttribute("users", users);
                     request.setAttribute("username_mitt", username_mitt);
                     request.getRequestDispatcher("index.jsp").forward(request, response);
+                    index = 1;
                 }
             }
-
-            request.getRequestDispatcher("login_prova.jsp").forward(request, response);
+            if (index == 0) {
+                request.getRequestDispatcher("login_prova.jsp").forward(request, response);
+            }
             c.close();
         } catch (SQLException ex) {
             Logger.getLogger(LoginServlet.class.getName()).log(Level.SEVERE, null, ex);

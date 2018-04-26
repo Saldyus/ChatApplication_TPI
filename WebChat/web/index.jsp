@@ -4,7 +4,6 @@
     Created on : 17-apr-2018, 18.58.16
     Author     : Dinaro Salvatore
 --%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
@@ -49,21 +48,12 @@
                                         <img src="image/businessman.png">
                                     </div>
                                     <div class="chat-left-detail">
-                                        <a onclick="changeName(this.name)" href="#message" name="${user.username}">${user.username}</a>
+                                        <a href="#" onclick="changeName(this.name)" name="${user.username}">${user.username}</a>
                                         <span><i class="fa fa-circle" aria-hidden="true"></i> online</span>
                                     </div>
                                 </li>
                             </c:forEach>
-
-
-                            </ UTENTE LEFT />
-
                             <a href="logout.jsp">Logout</a>
-
-
-
-
-
                         </ul>
                     </div>
                 </div>
@@ -81,35 +71,18 @@
                     </div>
                     <div class="row">
                         <div class="col-md-12 right-header-contentChat">
+                            <font color ="black">
                             <ul id="aggiorna">
-                                <font color="black">
-                                <c:forEach items="${messages}" var="message">
-                                    <p>
-                                        <c:if test="${message.getDS}.equals(\"SX\")">
-                                        <li>
-                                            <div class="rightside-right-chat">
-                                                <span><i class="fa fa-circle" aria-hidden="true"></i></span><br><br>
-                                                <p><c:out value="${message.text_m}"/></p>
-                                            </div>
-                                        </li>
-                                    </c:if>
-                                    <c:otherwise>
-                                        <li>
-                                            <div class="rightside-left-chat">
-                                                <span><i class="fa fa-circle" aria-hidden="true"></i> nome ricevente <small>10:00 AM,Today</small> </span><br><br>
-                                                <p><c:out value="${message.text_m}"/></p>
-                                            </div>
-                                        </li>
-                                    </c:otherwise>
-                                    </p>
-                                </c:forEach>
-                                </font>
+
                             </ul>
+                            </font>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-12 right-chat-textbox">
-                            <input type="text" id="text"><a><button class="" name="invia" type="submit"><i class="fa fa-arrow-right" aria-hidden="true"></i></button></a>
+                            <input type="text" id="message_text">
+                            <a href="#"><button onclick="sendMessage()" name="invia" type="submit"><i class="fa fa-arrow-right" aria-hidden="true"></i></button></a>
+
                         </div>
                     </div>
                 </div>
@@ -125,30 +98,70 @@
         </script>
         <script type="text/javascript">
             var int = 0;
-            var username;
+            var username = "";
+
             function changeName(name) {
+                document.getElementById("aggiorna").innerHTML = "";
                 document.getElementById("nome").innerHTML = name;
                 username = name;
                 int = 1;
             }
+
             window.setInterval(function () {
                 if (int == 1) {
-                    loadMessage(name);
+                    loadMessage();
                 }
             }, 1000);
-            function loadMessage(name) {
+
+            function loadMessage() {
                 $.ajax({
                     type: "POST",
                     url: "${pageContext.request.contextPath}/MessageServlet",
-                    data: "?mitt=${username_mitt}&dest=" + username,
-                    dataType: "html",
+                    data: "mitt=${username_mitt}&dest=" + username,
+                    dataType: "json",
                     success: function (risposta) {
-                        console.log("${username_mitt}");
-                        console.log(username);
-                        console.log(risposta);
+                        var obj = risposta;
+                        var html = "";
+                        for (i in obj.messages) {
+                            var DS = obj.messages[i].DS;
+                            if (DS === "DX") {
+                                html += "<li>"
+                                        + "<div class=\"rightside-right-chat\">"
+                                        + "<span><small>" + obj.messages[i].data_m + "</small> Io <i class=\"fa fa-circle\" aria-hidden=\"true\"></i></span><br/><br/>"
+                                        + "<p>" + obj.messages[i].text_m + "</p>"
+                                        + "</div>"
+                                        + "</li>";
+                            } else {
+                                html += "<li>"
+                                        + "<div class=\"rightside-left-chat\">"
+                                        + "<span> " + obj.messages[i].mitt + "<small> " + obj.messages[i].data_m + " </small><i class=\"fa fa-circle\" aria-hidden=\"true\"></i></span><br/><br/>"
+                                        + "<p>" + obj.messages[i].text_m + "</p>"
+                                        + "</div>"
+                                        + "</li>";
+                            }
+                            document.getElementById("aggiorna").innerHTML = html;
+                        }
                     },
                     error: function () {
                         alert("Chiamata fallita!!!");
+                    }
+                });
+            }
+
+
+            function sendMessage() {
+                var text = $("#message_text").val();
+                document.getElementById("message_text").value = "";
+                $.ajax({
+                    type: "POST",
+                    url: "${pageContext.request.contextPath}/SendMessageServlet",
+                    data: "mitt=${username_mitt}&dest=" + username + "&text=" + text,
+                    dataType: "json",
+                    success: function (risposta) {
+                        
+                    },
+                    error: function () {
+                        
                     }
                 });
             }

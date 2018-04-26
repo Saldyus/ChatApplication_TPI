@@ -202,7 +202,6 @@
                 </div>
             </form>
         </div>
-
         <script>
             // Get the modal
             var modal = document.getElementById('login');
@@ -210,7 +209,7 @@
 
             // When the user clicks anywhere outside of the modal, close it
             window.onclick = function (event) {
-                if (event.target == modal)) {
+                if (event.target == modal) {
                     modal.style.display = "none";
                 } else {
                     if (event.target == modal2) {
@@ -220,6 +219,5 @@
 
             }
         </script>
-
     </body>
 </html>
