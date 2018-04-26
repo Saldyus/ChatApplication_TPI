@@ -5,6 +5,7 @@
  */
 package Servelet;
 
+import com.google.gson.Gson;
 import database.Messaggi;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -47,7 +48,7 @@ public class MessageServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+
     }
 
     /**
@@ -61,20 +62,20 @@ public class MessageServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+
         List<Messaggi> message = new ArrayList<>();
         String mitt_w = request.getParameter("mitt");
         String dest_w = request.getParameter("dest");
-        
+
         try {
             Connection c = dataSource.getConnection();
-            PreparedStatement ps = c.prepareStatement("SELECT * FROM chat.messaggi WHERE (mitt = ? and dest = ?) OR (mitt = ? and dest = ?)");
+            PreparedStatement ps = c.prepareStatement("SELECT * FROM chat.messaggi WHERE (mitt = \"?\" and dest = \"?\") OR (mitt = \"?\" and dest = \"?\")");
             ps.setString(1, mitt_w);
             ps.setString(2, dest_w);
             ps.setString(3, dest_w);
             ps.setString(4, mitt_w);
             ResultSet r = ps.executeQuery();
-            while(r.next()){
+            while (r.next()) {
                 int ID_M = r.getInt("ID_M");
                 String mitt = r.getString("mitt");
                 String dest = r.getString("dest");
@@ -82,19 +83,25 @@ public class MessageServlet extends HttpServlet {
                 String text_m = r.getString("text_m");
                 Date data = r.getDate("data");
                 Messaggi m = new Messaggi(ID_M, mitt, dest, type_m, text_m, data);
-                if(mitt.equals(mitt_w)){
+                if (mitt.equals(mitt_w)) {
                     m.setDS("DX");
-                }else{
+                } else {
                     m.setDS("SX");
                 }
                 message.add(m);
             }
             request.setAttribute("messages", message);
+
+            String json = new Gson().toJson(message);
+            response.setContentType("application/json");
+            response.setCharacterEncoding("UTF-8");
+            response.getWriter().write(json);
+
             c.close();
         } catch (SQLException ex) {
             Logger.getLogger(MessageServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
     }
 
     /**

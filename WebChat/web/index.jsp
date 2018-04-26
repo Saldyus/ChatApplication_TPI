@@ -15,70 +15,6 @@
         <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-        <script type="text/javascript">
-            $(document).reay(function () {
-            var username = $(#mex_groups).val();
-            $.ajax({
-            type: "POST",
-                    url: "${pageContext.request.contextPath}/MessageGroupServlet",
-                    data: "?mitt=${username_mitt},
-                    dataType: "html",
-                    success: function(risposta) {
-                    $("div#message").html(risposta);
-                    },
-                    error: function () {
-                    alert("Chiamata fallita!!!");
-                    }
-            });
-            return false;
-            });
-        </script>
-        <script type="text/javascript">
-            $(document).reay(function () {
-            var username = $(#mex).val();
-            $.ajax({
-            type: "POST",
-                    url: "${pageContext.request.contextPath}/MessageServlet",
-                    data: "?mitt=${username_mitt}&dest=" + username,
-                    dataType: "html",
-                    success: function(risposta) {
-                    $("div#message").html(risposta);
-                    document.getElementById("name").innerHTML = username;
-                    },
-                    error: function () {
-                    alert("Chiamata fallita!!!");
-                    }
-            });
-            return false;
-            });
-        </script>
-        <script type="text/javascript">
-            function changeName(name){
-            document.getElementById("nome").innerHTML = name;
-            startInterval(name);
-            }
-        </script>
-        <script>
-            function startInterval(name)
-            {
-            setInterval("loadMessage(name);", 1000);
-            }
-            function loadMessage(name){
-            var username = name;
-            $.ajax({
-            type: "POST",
-                    url: "${pageContext.request.contextPath}/MessageServlet",
-                    data: "?mitt=${username_mitt}&dest=" + username,
-                    dataType: "html",
-                    success: function(risposta) {
-                    console.log(risposta)
-                    },
-                    error: function () {
-                    alert("Chiamata fallita!!!");
-                    }
-            });
-            }
-        </script>
     </head>
     <body>
         <div class="container main-section">
@@ -145,27 +81,29 @@
                     </div>
                     <div class="row">
                         <div class="col-md-12 right-header-contentChat">
-                            <ul>
+                            <ul id="aggiorna">
+                                <font color="black">
                                 <c:forEach items="${messages}" var="message">
-                                    <c:if  var="mex">
-                                        
-                                    </c:if>
-                                    
                                     <p>
-                                    <li>
-                                        <div class="rightside-right-chat">
-                                            <span><i class="fa fa-circle" aria-hidden="true"></i></span><br><br>
-                                            <p id="mex_io"><c:out value="${message}"/></p>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="rightside-left-chat">
-                                            <span><i class="fa fa-circle" aria-hidden="true"></i> nome ricevente <small>10:00 AM,Today</small> </span><br><br>
-                                            <p id="mex_non_io"><c:out value="${message}"/></p>
-                                        </div>
-                                    </li>
+                                        <c:if test="${message.getDS}.equals(\"SX\")">
+                                        <li>
+                                            <div class="rightside-right-chat">
+                                                <span><i class="fa fa-circle" aria-hidden="true"></i></span><br><br>
+                                                <p><c:out value="${message.text_m}"/></p>
+                                            </div>
+                                        </li>
+                                    </c:if>
+                                    <c:otherwise>
+                                        <li>
+                                            <div class="rightside-left-chat">
+                                                <span><i class="fa fa-circle" aria-hidden="true"></i> nome ricevente <small>10:00 AM,Today</small> </span><br><br>
+                                                <p><c:out value="${message.text_m}"/></p>
+                                            </div>
+                                        </li>
+                                    </c:otherwise>
                                     </p>
                                 </c:forEach>
+                                </font>
                             </ul>
                         </div>
                     </div>
@@ -180,10 +118,40 @@
 
         <script type="text/javascript">
             $(document).ready(function () {
-            var height = $(window).height();
-            $('.left-chat').css('height', (height - 92) + 'px');
-            $('.right-header-contentChat').css('height', (height - 163) + 'px');
+                var height = $(window).height();
+                $('.left-chat').css('height', (height - 92) + 'px');
+                $('.right-header-contentChat').css('height', (height - 163) + 'px');
             });
+        </script>
+        <script type="text/javascript">
+            var int = 0;
+            var username;
+            function changeName(name) {
+                document.getElementById("nome").innerHTML = name;
+                username = name;
+                int = 1;
+            }
+            window.setInterval(function () {
+                if (int == 1) {
+                    loadMessage(name);
+                }
+            }, 1000);
+            function loadMessage(name) {
+                $.ajax({
+                    type: "POST",
+                    url: "${pageContext.request.contextPath}/MessageServlet",
+                    data: "?mitt=${username_mitt}&dest=" + username,
+                    dataType: "html",
+                    success: function (risposta) {
+                        console.log("${username_mitt}");
+                        console.log(username);
+                        console.log(risposta);
+                    },
+                    error: function () {
+                        alert("Chiamata fallita!!!");
+                    }
+                });
+            }
         </script>
     </body>
 </html>
