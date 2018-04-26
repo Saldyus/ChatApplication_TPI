@@ -111,7 +111,7 @@
                 if (int == 1) {
                     loadMessage();
                 }
-            }, 1000);
+            }, 500);
 
             function loadMessage() {
                 $.ajax({

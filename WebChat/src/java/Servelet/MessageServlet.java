@@ -71,7 +71,7 @@ public class MessageServlet extends HttpServlet {
 
         try {
             Connection c = dataSource.getConnection();
-            PreparedStatement ps = c.prepareStatement("SELECT * FROM chat.messaggi WHERE (mitt = ? and dest = ?) OR (mitt = ? and dest = ?)");
+            PreparedStatement ps = c.prepareStatement("SELECT * FROM chat.messaggi WHERE (mitt = ? and dest = ?) OR (mitt = ? and dest = ?) ORDER BY ID_M asc");
             ps.setString(1, mitt_w);
             ps.setString(2, dest_w);
             ps.setString(3, dest_w);
