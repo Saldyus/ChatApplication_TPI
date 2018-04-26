@@ -83,7 +83,7 @@ public class LoginServlet extends HttpServlet {
             ps.executeUpdate();
 
             request.getRequestDispatcher("login_prova.jsp").forward(request, response);
-
+            c.close();
         } catch (SQLException ex) {
             Logger.getLogger(LoginServlet.class.getName()).log(Level.SEVERE, null, ex);
         } catch (NoSuchAlgorithmException ex) {

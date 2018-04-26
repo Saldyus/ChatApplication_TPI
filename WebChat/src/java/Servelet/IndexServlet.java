@@ -137,7 +137,6 @@ public class IndexServlet extends HttpServlet {
         } catch (NoSuchAlgorithmException ex) {
             Logger.getLogger(IndexServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
-
     }
 
     /**

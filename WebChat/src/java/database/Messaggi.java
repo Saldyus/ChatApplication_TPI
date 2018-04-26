@@ -31,6 +31,8 @@ public class Messaggi implements Serializable{
     
     private Date data_m;
     
+    private String DS;
+    
     /**
      * 
      * @param ID_M The ID of the Message
@@ -149,5 +151,21 @@ public class Messaggi implements Serializable{
      */
     public void setDayM(Date data){
         data_m=data;
+    }
+    
+    /**
+     * 
+     * @param DS A parame used to decide if the message was in SX or DX
+     */
+    public void setDS(String DS){
+        this.DS = DS;
+    }
+    
+    /**
+     * 
+     * @return DX or SX in 
+     */
+    public String getDS(){
+        return DS;
     }
 }

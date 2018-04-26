@@ -82,9 +82,15 @@ public class MessageServlet extends HttpServlet {
                 String text_m = r.getString("text_m");
                 Date data = r.getDate("data");
                 Messaggi m = new Messaggi(ID_M, mitt, dest, type_m, text_m, data);
+                if(mitt.equals(mitt_w)){
+                    m.setDS("DX");
+                }else{
+                    m.setDS("SX");
+                }
                 message.add(m);
             }
             request.setAttribute("messages", message);
+            c.close();
         } catch (SQLException ex) {
             Logger.getLogger(MessageServlet.class.getName()).log(Level.SEVERE, null, ex);
         }

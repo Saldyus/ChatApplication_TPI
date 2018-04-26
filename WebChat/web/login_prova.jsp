@@ -172,7 +172,7 @@
                 <div class="imgcontainer">
                     <span onclick="document.getElementById('register').style.display = 'none'" class="close" title="Close Modal">&times;</span>
                     
-                    <input type="file" accept=".jpg, .jpeg, .png, .gif" style="position: absolute; top=0px; left: 0px; width: 100%; height: 100%; opacity: 0; cursor: pointer;" />
+                    <input type="file" accept=".jpg, .jpeg, .png, .gif" style="position: absolute; border-radius:20%; top: 0px; left: 39%; width: 23%; height: 36%; opacity: 0; cursor: pointer;" />
                     <script type="text/javascript">
                         function getFilePath(){
                             $('input[type=file]').change(function(){
@@ -190,7 +190,7 @@
                         <input type="password" placeholder="Enter Password" name="password" required>
 
                         <label for="nome_v"><b>Nome visualizzato</b></label>
-                        <input type="text" placeholedr="Enter name visualized" name="nome_v" required>
+                        <input type="text" placeholder="Enter name visualized" name="nome_v" required>
 
                         <button type="submit">Register</button>
 

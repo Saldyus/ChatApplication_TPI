@@ -52,6 +52,33 @@
             return false;
             });
         </script>
+        <script type="text/javascript">
+            function changeName(name){
+            document.getElementById("nome").innerHTML = name;
+            startInterval(name);
+            }
+        </script>
+        <script>
+            function startInterval(name)
+            {
+            setInterval("loadMessage(name);", 1000);
+            }
+            function loadMessage(name){
+            var username = name;
+            $.ajax({
+            type: "POST",
+                    url: "${pageContext.request.contextPath}/MessageServlet",
+                    data: "?mitt=${username_mitt}&dest=" + username,
+                    dataType: "html",
+                    success: function(risposta) {
+                    console.log(risposta)
+                    },
+                    error: function () {
+                    alert("Chiamata fallita!!!");
+                    }
+            });
+            }
+        </script>
     </head>
     <body>
         <div class="container main-section">
@@ -81,27 +108,15 @@
                             </c:forEach>
                             <font color="white">Utenti Database:<br/></font>
                             <c:forEach items="${users}" var="user">
-                                <p id="users">
-                                    <form name="user">
-                                        <font color="black"><input type="submit" id="username_dest" value="<c:out value="${user.username}" />" /></font>
-                                    </form>
-                                </p>
-                                <script type="text/javascript">
-                                    var myform = document.form.user;
-                                    var useraname = document.getElementById("username_dest");
-                                    
-                                    myform.addEventListener("submit", fuction(e){
-                                        document.getElementById("name").innerHTML = username;
-                                        var xhttp = new XMLHttpRequest();
-                                        xhttp.onreadystatechange = function(){
-                                            if (this.readyState == 4 && this.status == 200) {
-                                                document.getElementById("message").innerHTML = this.responseText;
-                                            }
-                                        };
-                                        xhttp.open("POST", "${pageContext.request.contextPath}/MessageServlet?mitt=${username_mitt}&dest="+username, true);
-                                        xhttp.send();
-                                    });
-                                </script>
+                                <li>
+                                    <div class="chat-left-img">
+                                        <img src="image/businessman.png">
+                                    </div>
+                                    <div class="chat-left-detail">
+                                        <a onclick="changeName(this.name)" href="#message" name="${user.username}">${user.username}</a>
+                                        <span><i class="fa fa-circle" aria-hidden="true"></i> online</span>
+                                    </div>
+                                </li>
                             </c:forEach>
 
 
@@ -125,36 +140,32 @@
                             </div>
                             <div class="right-header-detail">
                                 <p id="nome"> NOME RICEVENTE </p>
-
                             </div>
                         </div>
                     </div>
                     <div class="row">
-                        <div id="message" class="col-md-12 right-header-contentChat">
+                        <div class="col-md-12 right-header-contentChat">
                             <ul>
                                 <c:forEach items="${messages}" var="message">
+                                    <c:if  var="mex">
+                                        
+                                    </c:if>
+                                    
                                     <p>
-                                        <c:out value="${message}"/>
+                                    <li>
+                                        <div class="rightside-right-chat">
+                                            <span><i class="fa fa-circle" aria-hidden="true"></i></span><br><br>
+                                            <p id="mex_io"><c:out value="${message}"/></p>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="rightside-left-chat">
+                                            <span><i class="fa fa-circle" aria-hidden="true"></i> nome ricevente <small>10:00 AM,Today</small> </span><br><br>
+                                            <p id="mex_non_io"><c:out value="${message}"/></p>
+                                        </div>
+                                    </li>
                                     </p>
                                 </c:forEach>
-
-
-
-
-
-
-                                </ MESSAGGIO IO 
-
-                                //MESSAGGIO UTENTE RICEVENTE />
-
-
-
-
-
-
-
-
-
                             </ul>
                         </div>
                     </div>
