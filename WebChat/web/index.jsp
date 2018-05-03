@@ -70,7 +70,7 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-12 right-header-contentChat">
+                        <div class="col-md-12 right-header-contentChat" style="overflow-y: scroll; flex-direction: column-reverse">
                             <font color ="black">
                             <ul id="aggiorna">
 
@@ -81,7 +81,7 @@
                     <div class="row">
                         <div class="col-md-12 right-chat-textbox">
                             <input type="text" id="message_text">
-                            <a href="#"><button onclick="sendMessage()" name="invia" type="submit"><i class="fa fa-arrow-right" aria-hidden="true"></i></button></a>
+                            <a onclick="sendMessage()" name="invia" href="#"><i class="fa fa-arrow-right" aria-hidden="true"></i></a>
 
                         </div>
                     </div>
@@ -120,6 +120,7 @@
                     data: "mitt=${username_mitt}&dest=" + username,
                     dataType: "json",
                     success: function (risposta) {
+                        console.log(risposta);
                         var obj = risposta;
                         var html = "";
                         for (i in obj.messages) {
