@@ -70,6 +70,9 @@ public class SendMessageServlet extends HttpServlet {
         
         Calendar ca = Calendar.getInstance();
         
+        int m = Integer.valueOf(ca.get(Calendar.MONTH)) + 1;
+        String month = String.valueOf(m);
+         
         try {
             Connection c = dataSource.getConnection();
             PreparedStatement ps = c.prepareStatement("INSERT INTO chat.messaggi (mitt, dest, type_m, text_m, data_m) VALUES (?, ?, ?, ?, ?)");
@@ -77,7 +80,7 @@ public class SendMessageServlet extends HttpServlet {
             ps.setString(2, dest);
             ps.setString(3, "message");
             ps.setString(4, message);
-            ps.setString(5, ca.get(Calendar.YEAR)+"-"+ ca.get(Calendar.MONTH) +"-" + ca.get(Calendar.DAY_OF_MONTH));
+            ps.setString(5, ca.get(Calendar.YEAR)+"-"+ month +"-" + ca.get(Calendar.DAY_OF_MONTH));
             ps.executeUpdate();
             
             response.setContentType("text/plain");

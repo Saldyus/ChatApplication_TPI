@@ -45,7 +45,7 @@
                             <c:forEach items="${users}" var="user">
                                 <li>
                                     <div class="chat-left-img">
-                                        <img src="image/businessman.png">
+                                        <img src="image/user.png">
                                     </div>
                                     <div class="chat-left-detail">
                                         <a href="#" onclick="changeName(this.name)" name="${user.username}">${user.username}</a>
@@ -53,24 +53,23 @@
                                     </div>
                                 </li>
                             </c:forEach>
-                            <a href="logout.jsp">Logout</a>
+                                <a onclick="logout()">Logout</a>
                         </ul>
                     </div>
                 </div>
-                <div class="col-md-9 col-sm-9 col-xs-12 right-sidebar">
+                <div class="col-md-9 col-sm-9 col-xs-12 right-sidebar" id="scrollbar">
                     <div class="row">
                         <div class="col-md-12 right-header">
                             <div class="right-header-img">
-                                <img src="
-                                     FOTO PROFILO ">
+                                <img src="image/user.png">
                             </div>
                             <div class="right-header-detail">
                                 <p id="nome"> NOME RICEVENTE </p>
                             </div>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-md-12 right-header-contentChat" style="overflow-y: scroll; flex-direction: column-reverse">
+                    <div class="row" id="scrollbar">
+                        <div class="col-md-12 right-header-contentChat">
                             <font color ="black">
                             <ul id="aggiorna">
 
@@ -99,6 +98,7 @@
         <script type="text/javascript">
             var int = 0;
             var username = "";
+            //$("#messages").scrollTop($("#messages")[0].scrollHeight);
 
             function changeName(name) {
                 document.getElementById("aggiorna").innerHTML = "";
@@ -112,6 +112,15 @@
                     loadMessage();
                 }
             }, 500);
+
+            function logout() {
+                setTimeout(
+                        function () {
+                            window.location.href = "${pageContext.request.contextPath}/LoginServlet";
+                        },
+                        0
+                        );
+            }
 
             function loadMessage() {
                 $.ajax({
@@ -159,10 +168,10 @@
                     data: "mitt=${username_mitt}&dest=" + username + "&text=" + text,
                     dataType: "json",
                     success: function (risposta) {
-                        
+
                     },
                     error: function () {
-                        
+
                     }
                 });
             }

@@ -180,7 +180,7 @@
                             });
                         }
                     </script>
-                    <img src="user.png" class="avatar" id="foto">
+                    <img src="image/user.png" class="avatar" id="foto">
 
                     <div class="container">
                         <label for="username"><b>Username</b></label>
