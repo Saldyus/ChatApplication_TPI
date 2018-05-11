@@ -6,7 +6,12 @@
 package Servelet;
 
 import DatabaseManager.DatabaseManagerUsers;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
@@ -72,7 +77,7 @@ public class LoginServlet extends HttpServlet {
             while(r.next()){
                 String username = r.getString("username");
                 if(username.equals(username_mitt)){
-                    request.getRequestDispatcher("Register.jsp").forward(request, response);
+                    request.getRequestDispatcher("login_prova.jsp").forward(request, response);
                 }
             }
             
@@ -121,4 +126,19 @@ public class LoginServlet extends HttpServlet {
         return hash;
     }
 
+    public static void saveImage(String imageUrl, String destinationFile) throws IOException {
+        InputStream is = new FileInputStream(new File(imageUrl));
+        OutputStream os = new FileOutputStream(new File(destinationFile));
+
+        byte[] b = new byte[1024];
+        int length;
+
+        while ((length = is.read(b)) != -1) {
+            os.write(b, 0, length);
+        }
+
+        is.close();
+        os.close();
+    }
+    
 }

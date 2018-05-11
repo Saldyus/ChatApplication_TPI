@@ -13,6 +13,7 @@
 <html>
     <head>
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
         <style>
             body {font-family: Arial, Helvetica, sans-serif;}
 
@@ -49,6 +50,12 @@
             }
 
             /* Center the image and position the close button */
+            img{
+                width: 280px;
+                height: 280px;
+                border-radius: 50%;
+            }
+
             .imgcontainer {
                 text-align: center;
                 margin: 24px 0 12px 0;
@@ -171,16 +178,9 @@
             <form class="modal-content animate" action="${pageContext.request.contextPath}/LoginServlet" method="POST">
                 <div class="imgcontainer">
                     <span onclick="document.getElementById('register').style.display = 'none'" class="close" title="Close Modal">&times;</span>
-                    
-                    <input type="file" accept=".jpg, .jpeg, .png, .gif" style="position: absolute; border-radius:20%; top: 0px; left: 39%; width: 23%; height: 36%; opacity: 0; cursor: pointer;" />
-                    <script type="text/javascript">
-                        function getFilePath(){
-                            $('input[type=file]').change(function(){
-                                var filePath=$('#foto').val();
-                            });
-                        }
-                    </script>
-                    <img src="image/user.png" class="avatar" id="foto">
+
+                    <input type="file" id="foto" accept=".jpg, .jpeg, .png, .gif" class="avatar" style="position: absolute; border-radius:50%; width: 280px; height: 280px; opacity: 0; cursor: pointer;" />
+                    <img src="image/user.png" class="avatar" id="photo" alt="image">
 
                     <div class="container">
                         <label for="username"><b>Username</b></label>
@@ -206,6 +206,20 @@
             // Get the modal
             var modal = document.getElementById('login');
             var modal2 = document.getElementById('register');
+            
+            function readURL(input) {
+                if (input.files && input.files[0]) {
+                    var reader = new FileReader();
+                    reader.onload = function (e) {
+                        $('#photo').attr('src', e.target.result);
+                    }
+                    reader.readAsDataURL(input.files[0]);
+                }
+            }
+
+            $("#foto").change(function () {
+                readURL(this);
+            });
 
             // When the user clicks anywhere outside of the modal, close it
             window.onclick = function (event) {
